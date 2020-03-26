@@ -13,10 +13,37 @@
 <body>
 <nav th:replace="navbar:: Navbar"></nav>
 <div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Max loan days</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.maxLoanDays}"></td>
+        </tr>
+        </tbody>
+    </table>
     <form th:action="@{/create/loan/process}" th:object="${form}" method="post">
+
         <label for="startDate">Loan date</label>
-        <input class="form-control" type="date" id="startDate" th:field="*{firstName}"/>
-        <button class="btn btn-primary" type="submit">Send</button>
+        <input class="form-control" type="date" id="startDate" th:field="*{startDate}"/>
+        <label for="endDate">Return date</label>
+        <input class="form-control" type="date" id="endDate" th:field="*{endDate}"/>
+        <table class="table">
+            <tr>
+                <td><input class="check-box-table-cell" type="checkbox" id="appUserEmail" th:value="${#authentication.name}" th:field="*{appUserEmail}"></td>
+                <td><label for="appUserEmail"><span th:text="'Confirm user: '+${#authentication.name}"/></label></td>
+            </tr>
+            <tr>
+                <td><input class="check-box-table-cell" type="checkbox" id="confirmation" th:value="${libraryBookId}" th:field="*{libraryBookId}"></td>
+                <td><label for="confirmation"><span th:text="'Confirm book choice: '+${book.title}"/></label></td>
+            </tr>
+        </table>
+        <button class="btn btn-primary" type="submit">Borrow Book</button>
     </form>
 </div>
 </body>

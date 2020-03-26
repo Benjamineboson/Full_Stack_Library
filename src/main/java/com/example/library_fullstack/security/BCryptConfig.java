@@ -1,4 +1,4 @@
-package se.ecutb.thymeleaf_db_lecture.security;
+package com.example.library_fullstack.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

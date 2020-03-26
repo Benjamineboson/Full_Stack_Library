@@ -10,6 +10,16 @@ public class MySecConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").permitAll();
+                .antMatchers("/creat/book").hasAuthority("ADMIN")
+                .antMatchers("/**").permitAll()
+                .and()
+                .formLogin()
+                .usernameParameter("email")
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout");
     }
 }

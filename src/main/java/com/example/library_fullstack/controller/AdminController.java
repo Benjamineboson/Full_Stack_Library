@@ -6,6 +6,7 @@ import com.example.library_fullstack.dto.CreateAppUserForm;
 import com.example.library_fullstack.dto.CreateLibraryBookForm;
 import com.example.library_fullstack.entity.AppUser;
 import com.example.library_fullstack.entity.LibraryBook;
+import com.example.library_fullstack.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +25,13 @@ public class AdminController {
 
     private AppUserRepository appUserRepository;
     private LibraryBookRepository libraryBookRepository;
+    private AppUserService appUserService;
 
     @Autowired
-    public AdminController(AppUserRepository appUserRepository, LibraryBookRepository libraryBookRepository) {
+    public AdminController(AppUserRepository appUserRepository, LibraryBookRepository libraryBookRepository, AppUserService appUserService) {
         this.appUserRepository = appUserRepository;
         this.libraryBookRepository = libraryBookRepository;
+        this.appUserService = appUserService;
     }
 
     @GetMapping("/create/user")
@@ -54,8 +57,8 @@ public class AdminController {
             return "create-user";
         }
 
-        AppUser newAppUser = new AppUser(form.getFirstName(),form.getLastName(),form.getEmail(),form.getPassword(), LocalDate.now());
-        appUserRepository.save(newAppUser);
+        AppUser newAppUser = appUserService.registerAppUser(form.getFirstName(),form.getLastName(),form.getEmail(),form.getPassword(), LocalDate.now(),form.isAdmin());
+        
 
         return "redirect:/index";
     }

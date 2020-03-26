@@ -44,6 +44,12 @@ public class AppUser {
 
     public AppUser(){}
 
+
+    public boolean addLoan(Loan loan){
+        if (!loanList.contains(loan)) return loanList.add(loan);
+        return false;
+    }
+
     public int getAppUserId() {
         return appUserId;
     }
