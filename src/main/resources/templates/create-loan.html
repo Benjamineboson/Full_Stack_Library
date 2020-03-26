@@ -33,16 +33,8 @@
         <input class="form-control" type="date" id="startDate" th:field="*{startDate}"/>
         <label for="endDate">Return date</label>
         <input class="form-control" type="date" id="endDate" th:field="*{endDate}"/>
-        <table class="table">
-            <tr>
-                <td><input class="check-box-table-cell" type="checkbox" id="appUserEmail" th:value="${#authentication.name}" th:field="*{appUserEmail}"></td>
-                <td><label for="appUserEmail"><span th:text="'Confirm user: '+${#authentication.name}"/></label></td>
-            </tr>
-            <tr>
-                <td><input class="check-box-table-cell" type="checkbox" id="confirmation" th:value="${libraryBookId}" th:field="*{libraryBookId}"></td>
-                <td><label for="confirmation"><span th:text="'Confirm book choice: '+${book.title}"/></label></td>
-            </tr>
-        </table>
+        <input th:type="hidden" name="appUserEmail" id="appUserEmail" th:value="${#authentication.name}">
+        <input th:type="hidden" id="libraryBookId" name="libraryBookId" th:value="${libraryBookId}">
         <button class="btn btn-primary" type="submit">Borrow Book</button>
     </form>
 </div>

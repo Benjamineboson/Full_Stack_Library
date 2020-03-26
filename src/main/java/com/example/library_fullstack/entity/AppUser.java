@@ -50,6 +50,14 @@ public class AppUser {
         return false;
     }
 
+    public List<Loan> getLoanList() {
+        return loanList;
+    }
+
+    public void setLoanList(List<Loan> loanList) {
+        this.loanList = loanList;
+    }
+
     public int getAppUserId() {
         return appUserId;
     }
