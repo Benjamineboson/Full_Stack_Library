@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script defer th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script defer th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <meta charset="UTF-8">
+    <title>Create book</title>
+</head>
+<body>
+<nav th:replace="navbar:: Navbar"></nav>
+<div class="container">
+    <form th:action="@{/create/book/process}" th:object="${form}" method="post">
+        <label for="title">Title</label>
+        <input class="form-control" type="text" id="title" th:field="*{title}"/>
+        <label for="maxLoanDays">Max loan days</label>
+        <input class="form-control" type="number" id="maxLoanDays" th:field="*{maxLoanDays}">
+        <div th:if="${#fields.hasErrors('maxLoanDays')}">
+            <ul class="p-0">
+                <li th:each="error : ${#fields.errors('maxLoanDays')}">
+                    <span class="form-error" th:text="${error}"></span>
+                </li>
+            </ul>
+        </div>
+        <button class="btn btn-primary" type="submit">Send</button>
+    </form>
+</div>
+</body>
+</html>

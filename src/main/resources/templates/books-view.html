@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script defer th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script defer th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+<nav th:replace="navbar:: Navbar"></nav>
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Max loan days</th>
+                <th scope="col">Available</th>
+                <th scope="col">Reserved</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book: ${bookList}">
+                <td><span th:text="${book.title}"></span></td>
+                <td><span th:text="${book.maxLoanDays}"></span></td>
+                <td><span th:text="${book.available}"></span></td>
+                <td><span th:text="${book.reserved}"></span></td>
+                <td><a class="btn btn-primary btn-sm" href="#">Borrow</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

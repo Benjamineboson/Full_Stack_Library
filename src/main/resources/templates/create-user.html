@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script defer th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script defer th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <meta charset="UTF-8">
+    <title>Create user</title>
+</head>
+<body>
+<nav th:replace="navbar:: Navbar"></nav>
+    <div class="container">
+        <form th:action="@{/create/user/process}" th:object="${form}" method="post">
+            <label for="firstName">First name</label>
+            <input class="form-control" type="text" id="firstName" th:field="*{firstName}"/>
+            <div th:if="${#fields.hasErrors('firstName')}">
+                <ul class="p-0">
+                    <li th:each="error : ${#fields.errors('firstName')}">
+                        <span class="form-error" th:text="${error}"></span>
+                    </li>
+                </ul>
+            </div>
+            <label for="lastName">Last name</label>
+            <input class="form-control" type="text" id="lastName" th:field="*{lastName}"/>
+            <div th:if="${#fields.hasErrors('lastName')}">
+                <ul class="p-0">
+                    <li th:each="error : ${#fields.errors('lastName')}">
+                        <span class="form-error" th:text="${error}"></span>
+                    </li>
+                </ul>
+            </div>
+            <label for="email" >Email:</label>
+            <input class="form-control" type="email" id="email" th:field="*{email}"/>
+            <div th:if="${#fields.hasErrors('email')}">
+                <ul class="p-0">
+                    <li th:each="error : ${#fields.errors('email')}">
+                        <span class="form-error" th:text="${error}"></span>
+                    </li>
+                </ul>
+            </div>
+            <label for="password">Password</label>
+            <input class="form-control" type="password" id="password" th:field="*{password}"/>
+            <div th:if="${#fields.hasErrors('password')}">
+                <ul class="p-0">
+                    <li th:each="error : ${#fields.errors('password')}">
+                        <span class="form-error" th:text="${error}"></span>
+                    </li>
+                </ul>
+            </div>
+            <label for="confirm">Password confirmation</label>
+            <input class="form-control" type="password" id="confirm" th:field="*{passwordConfirm}">
+            <div th:if="${#fields.hasErrors('passwordConfirm')}">
+                <ul class="p-0">
+                    <li th:each="error : ${#fields.errors('passwordConfirm')}">
+                        <span class="form-error" th:text="${error}"></span>
+                    </li>
+                </ul>
+            </div>
+            <button class="btn btn-primary" type="submit">Send</button>
+        </form>
+    </div>
+</body>
+</html>
