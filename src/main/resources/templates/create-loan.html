@@ -31,8 +31,22 @@
 
         <label for="startDate">Loan date</label>
         <input class="form-control" type="date" id="startDate" th:field="*{startDate}"/>
+        <div th:if="${#fields.hasErrors('startDate')}">
+            <ul class="p-0">
+                <li th:each="error : ${#fields.errors('startDate')}">
+                    <span class="form-error" th:text="${error}"></span>
+                </li>
+            </ul>
+        </div>
         <label for="endDate">Return date</label>
         <input class="form-control" type="date" id="endDate" th:field="*{endDate}"/>
+        <div th:if="${#fields.hasErrors('endDate')}">
+            <ul class="p-0">
+                <li th:each="error : ${#fields.errors('endDate')}">
+                    <span class="form-error" th:text="${error}"></span>
+                </li>
+            </ul>
+        </div>
         <input th:type="hidden" name="appUserEmail" id="appUserEmail" th:value="${#authentication.name}">
         <input th:type="hidden" id="libraryBookId" name="libraryBookId" th:value="${libraryBookId}">
         <button class="btn btn-primary" type="submit">Borrow Book</button>

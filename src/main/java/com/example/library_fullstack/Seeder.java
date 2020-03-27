@@ -16,6 +16,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
+
 @Component
 public class Seeder implements CommandLineRunner {
 

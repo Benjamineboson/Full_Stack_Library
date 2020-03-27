@@ -1,12 +1,12 @@
 package com.example.library_fullstack.dto;
 
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
+import javax.validation.constraints.Size;
 
 public class CreateLoanForm {
-    @NotBlank(message = "Enter start of loan date")
+    @NotBlank(message = "Please enter loan date")
     private String startDate;
-    @NotBlank(message = "Enter end of loan date")
+    @NotBlank(message = "Please enter return date")
     private String endDate;
     private String appUserEmail;
     private String libraryBookId;
