@@ -5,9 +5,7 @@ import com.example.library_fullstack.data.AppUserRepository;
 import com.example.library_fullstack.data.LibraryBookRepository;
 import com.example.library_fullstack.data.LoanRepository;
 import com.example.library_fullstack.entity.AppRole;
-import com.example.library_fullstack.entity.AppUser;
 import com.example.library_fullstack.entity.LibraryBook;
-import com.example.library_fullstack.entity.Loan;
 import com.example.library_fullstack.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,7 +24,7 @@ public class Seeder implements CommandLineRunner {
     private AppUserRepository appUserRepository;
     private LoanRepository loanRepository;
     private AppUserService appUserService;
-    AppRoleRepository appRoleRepository;
+    private AppRoleRepository appRoleRepository;
 
     @Autowired
     public Seeder(LibraryBookRepository libraryBookRepository, AppUserRepository appUserRepository, LoanRepository loanRepository, AppUserService appUserService, AppRoleRepository appRoleRepository) {
@@ -46,8 +44,13 @@ public class Seeder implements CommandLineRunner {
                         new LibraryBook("A Game of Thrones",150),
                         new LibraryBook("Winds of Winter",60),
                         new LibraryBook("The Winter Soldier",150),
-                        (new LibraryBook("A Clash of Kings",90)
-)
+                        new LibraryBook("A Clash of Kings",90),
+                        new LibraryBook("The Gulag Archipelago",60),
+                        new LibraryBook("The Madness of Crowds",150),
+                        new LibraryBook("Java For Dummies",60),
+                        new LibraryBook("The Gunslinger",150),
+                        new LibraryBook("Lightbringer",60),
+                        new LibraryBook("Mistborn",150)
         ));
         appUserService.registerAppUser("Benjamin","Boson","BenjaminEBoson@Gmail.com","1a1b1c1d", LocalDate.now(),true);
     }

@@ -15,11 +15,17 @@ public class MySecConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .usernameParameter("email")
+                .passwordParameter("password")
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout");
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login?logout")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/accessDenied");
     }
 }

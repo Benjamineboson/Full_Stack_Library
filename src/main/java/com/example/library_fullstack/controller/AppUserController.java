@@ -7,15 +7,16 @@ import com.example.library_fullstack.dto.CreateLoanForm;
 import com.example.library_fullstack.entity.AppUser;
 import com.example.library_fullstack.entity.LibraryBook;
 import com.example.library_fullstack.entity.Loan;
+import com.example.library_fullstack.exception.AppResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -39,6 +40,27 @@ public class AppUserController {
         this.loanRepository = loanRepository;
     }
 
+
+
+    @RequestMapping(value = "loans/{email}")
+    public String getLoanView(Model model, @PathVariable("email") String email, @AuthenticationPrincipal UserDetails caller){
+        if (caller == null){
+            return "redirect:/accessDenied";
+        }
+
+        if (email.equals(caller.getUsername()) || caller.getAuthorities().stream().anyMatch(
+                auth -> auth.getAuthority().equals("ADMIN"))){
+            AppUser user = appUserRepository.findByEmailIgnoreCase(email).orElseThrow(
+                    () -> new AppResourceNotFoundException("User could not be found")
+            );
+            model.addAttribute("loanList",user.getLoanList());
+            return "loans-view";
+        }else{
+            return "access-denied";
+        }
+    }
+
+
     @GetMapping("/books")
     public String getBookView(Model model){
         List<LibraryBook> libraryBookList = libraryBookRepository.findAll();
@@ -53,6 +75,11 @@ public class AppUserController {
         LibraryBook book = libraryBookRepository.findById(libraryBookId).orElseThrow(IllegalArgumentException::new);
         model.addAttribute("book",book);
         return "create-loan";
+    }
+
+    @GetMapping("/accessDenied")
+    public String getAccessDenied(){
+        return "access-denied";
     }
 
     @GetMapping("/login")
@@ -94,6 +121,15 @@ public class AppUserController {
         Loan loan = new Loan(LocalDate.parse(form.getStartDate()),LocalDate.parse(form.getEndDate()), user,book);
         user.addLoan(loan);
         loanRepository.save(loan);
+        return "redirect:/index";
+    }
+
+    @GetMapping("loans/return/{id}")
+    public String returnBook(@PathVariable("id") int loanId){
+        Loan loan = loanRepository.findById(loanId).orElseThrow(IllegalArgumentException::new);
+        loan.getAppUser().getLoanList().remove(loan);
+        loan.getLibraryBook().setAvailable(true);
+        loanRepository.delete(loan);
         return "redirect:/index";
     }
 }

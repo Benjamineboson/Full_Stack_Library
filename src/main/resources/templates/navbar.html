@@ -16,22 +16,22 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <div sec:authorize="isAuthenticated()">
-            <li class="nav-item active">
-                <!--                <form class="form-control" th:replace="user-search :: search-email"/>-->
+            <li sec:authorize="isAuthenticated()" class="nav-item active">
                 <a class="nav-link" th:href="@{/books}">Books</a>
             </li>
-            </div>
+            <li sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" th:href="@{/loans/{email} (email=${#authentication.name})}">Loans</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/create/user}">Create user</a>
             </li>
         </ul>
-        <form th:action="@{/logout}" action="#" class="form-inline" method="post">
+        <form th:action="@{/logout}" class="form-inline" method="post">
             <div sec:authorize="isAuthenticated()">
                 <button class="btn btn-outline-info" type="submit" value="Logout">Logout</button>
             </div>
             <div sec:authorize="isAnonymous()">
-                <a class="btn btn-outline-info" th:href="@{/login}" href="#" value="Login">Login</a>
+                <a class="btn btn-outline-info" th:href="@{/login}" value="Login">Login</a>
             </div>
         </form>
     </div>

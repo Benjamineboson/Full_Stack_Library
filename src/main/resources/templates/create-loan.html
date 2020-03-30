@@ -28,7 +28,6 @@
         </tbody>
     </table>
     <form th:action="@{/create/loan/process}" th:object="${form}" method="post">
-
         <label for="startDate">Loan date</label>
         <input class="form-control" type="date" id="startDate" th:field="*{startDate}"/>
         <div th:if="${#fields.hasErrors('startDate')}">
