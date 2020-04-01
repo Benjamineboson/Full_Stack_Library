@@ -7,7 +7,6 @@ import com.example.library_fullstack.dto.CreateLoanForm;
 import com.example.library_fullstack.entity.AppUser;
 import com.example.library_fullstack.entity.LibraryBook;
 import com.example.library_fullstack.entity.Loan;
-import com.example.library_fullstack.exception.AppResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,7 +50,7 @@ public class AppUserController {
         if (email.equals(caller.getUsername()) || caller.getAuthorities().stream().anyMatch(
                 auth -> auth.getAuthority().equals("ADMIN"))){
             AppUser user = appUserRepository.findByEmailIgnoreCase(email).orElseThrow(
-                    () -> new AppResourceNotFoundException("User could not be found")
+                    () -> new IllegalArgumentException("User could not be found")
             );
             model.addAttribute("loanList",user.getLoanList());
             return "loans-view";

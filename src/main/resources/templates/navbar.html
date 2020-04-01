@@ -22,8 +22,11 @@
             <li sec:authorize="isAuthenticated()" class="nav-item">
                 <a class="nav-link" th:href="@{/loans/{email} (email=${#authentication.name})}">Loans</a>
             </li>
-            <li class="nav-item">
+            <li sec:authorize="isAnonymous() || hasAuthority('ADMIN')" class="nav-item">
                 <a class="nav-link" th:href="@{/create/user}">Create user</a>
+            </li>
+            <li sec:authorize="hasAuthority('ADMIN')" class="nav-item">
+                <a class="nav-link" th:href="@{/create/book}">Create book</a>
             </li>
         </ul>
         <form th:action="@{/logout}" class="form-inline" method="post">

@@ -12,7 +12,7 @@
 </head>
 <body>
 <nav th:replace="navbar:: Navbar"></nav>
-<div class="container">
+<div class="container" sec:authorize="hasAuthority('ADMIN')">
     <form th:action="@{/create/book/process}" th:object="${form}" method="post">
         <label for="title">Title</label>
         <input class="form-control" type="text" id="title" th:field="*{title}"/>
