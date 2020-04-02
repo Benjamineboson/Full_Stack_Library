@@ -83,10 +83,9 @@ public class AdminController {
 
     @PostMapping("/create/book/process")
     public String processCreateBookForm(@Valid @ModelAttribute("form") CreateLibraryBookForm form, BindingResult bindingResult){
-
-
-        if(form.getMaxLoanDays().length() < 1){
-            FieldError fieldError = new FieldError("form","maxLoanDays","Enter max amount of loan days");
+        if (form.getMaxLoanDays().length() > 4) return "create-book";
+        if(Integer.valueOf(form.getMaxLoanDays()) < 1 || Integer.valueOf(form.getMaxLoanDays()) > 365 ){
+            FieldError fieldError = new FieldError("form","maxLoanDays","Enter max amount of loan days (1-365)");
             bindingResult.addError(fieldError);
         }
 

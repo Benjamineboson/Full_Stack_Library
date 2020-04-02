@@ -14,13 +14,11 @@ public class LibraryBook {
     private String title;
     private int maxLoanDays;
     private boolean isAvailable;
-    private boolean isReserved;
 
     public LibraryBook(String title, int maxLoanDays) {
         this.title = title;
         this.maxLoanDays = maxLoanDays;
         this.isAvailable = true;
-        this.isReserved = false;
     }
 
     public LibraryBook(){}
@@ -53,13 +51,6 @@ public class LibraryBook {
         isAvailable = available;
     }
 
-    public boolean isReserved() {
-        return isReserved;
-    }
-
-    public void setReserved(boolean reserved) {
-        isReserved = reserved;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -69,13 +60,12 @@ public class LibraryBook {
         return libraryBookId == that.libraryBookId &&
                 maxLoanDays == that.maxLoanDays &&
                 isAvailable == that.isAvailable &&
-                isReserved == that.isReserved &&
                 Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(libraryBookId, title, maxLoanDays, isAvailable, isReserved);
+        return Objects.hash(libraryBookId, title, maxLoanDays, isAvailable);
     }
 
     @Override
@@ -85,7 +75,6 @@ public class LibraryBook {
                 ", title='" + title + '\'' +
                 ", maxLoanDays=" + maxLoanDays +
                 ", isAvailable=" + isAvailable +
-                ", isReserved=" + isReserved +
                 '}';
     }
 }

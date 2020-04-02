@@ -63,7 +63,6 @@ public class AppUserController {
 
     @GetMapping("/books")
     public String getBookView(Model model,@RequestParam(value = "search", defaultValue = "all") String search){
-        System.out.println(search);
         List<LibraryBook> libraryBookList = new ArrayList<>();
         if (search.equals("all")){
             libraryBookList = libraryBookRepository.findAll();
@@ -79,7 +78,10 @@ public class AppUserController {
 
 
     @GetMapping("/create/loan/{libraryBookId}")
-    public String getCreateLoanForm(Model model, @PathVariable("libraryBookId") int libraryBookId){
+    public String getCreateLoanForm(Model model, @PathVariable("libraryBookId") int libraryBookId, @AuthenticationPrincipal UserDetails caller){
+        if (caller == null || !libraryBookRepository.findById(libraryBookId).orElseThrow(IllegalArgumentException::new).isAvailable()){
+            return "redirect:/accessDenied";
+        }
         model.addAttribute("form",new CreateLoanForm());
         model.addAttribute("libraryBookId",libraryBookId);
         LibraryBook book = libraryBookRepository.findById(libraryBookId).orElseThrow(IllegalArgumentException::new);
