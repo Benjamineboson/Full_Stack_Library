@@ -7,6 +7,7 @@ import com.example.library_fullstack.dto.CreateLoanForm;
 import com.example.library_fullstack.entity.AppUser;
 import com.example.library_fullstack.entity.LibraryBook;
 import com.example.library_fullstack.entity.Loan;
+import org.aspectj.bridge.IMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,7 +48,6 @@ public class AppUserController {
         if (caller == null){
             return "redirect:/accessDenied";
         }
-
         if (email.equals(caller.getUsername()) || caller.getAuthorities().stream().anyMatch(
                 auth -> auth.getAuthority().equals("ADMIN"))){
             AppUser user = appUserRepository.findByEmailIgnoreCase(email).orElseThrow(
@@ -61,11 +62,21 @@ public class AppUserController {
 
 
     @GetMapping("/books")
-    public String getBookView(Model model){
-        List<LibraryBook> libraryBookList = libraryBookRepository.findAll();
+    public String getBookView(Model model,@RequestParam(value = "search", defaultValue = "all") String search){
+        System.out.println(search);
+        List<LibraryBook> libraryBookList = new ArrayList<>();
+        if (search.equals("all")){
+            libraryBookList = libraryBookRepository.findAll();
+        }else{
+            libraryBookList = libraryBookRepository.findByTitleContainsIgnoreCase(search);
+            if (libraryBookList.size() < 1){
+                model.addAttribute("message","Your search '"+search+"' didn't match any book...");
+            }
+        }
         model.addAttribute("bookList",libraryBookList);
         return "books-view";
     }
+
 
     @GetMapping("/create/loan/{libraryBookId}")
     public String getCreateLoanForm(Model model, @PathVariable("libraryBookId") int libraryBookId){

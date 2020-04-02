@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface LibraryBookRepository extends CrudRepository<LibraryBook,Integer> {
     List<LibraryBook> findAll();
+    List<LibraryBook> findByTitleContainsIgnoreCase(String title);
 }

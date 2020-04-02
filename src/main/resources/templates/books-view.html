@@ -13,7 +13,15 @@
 <body>
 <nav th:replace="navbar:: Navbar"></nav>
     <div class="container">
-        <table class="table">
+        <form class="form-group" th:action="@{/books}">
+            <table class="table">
+                <tr>
+                    <th><input class="form-control" id="search" name="search"></th>
+                    <th><input class="btn btn-success" type="submit" value="Search..."></th>
+                </tr>
+            </table>
+        </form>
+        <table class="table" th:if="${message == null}">
             <thead>
             <tr>
                 <th scope="col">Title</th>
@@ -29,6 +37,9 @@
             </tr>
             </tbody>
         </table>
+        <div th:if="${message != null}">
+            <h4 class="alert" th:text="${message}"></h4>
+        </div>
     </div>
 </body>
 </html>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class AdminController {
@@ -34,6 +35,13 @@ public class AdminController {
         this.appUserRepository = appUserRepository;
         this.libraryBookRepository = libraryBookRepository;
         this.appUserService = appUserService;
+    }
+
+    @GetMapping("/users")
+    public String getUserView(Model model){
+        List<AppUser> userList = appUserRepository.findAll();
+        model.addAttribute("userList",userList);
+        return "users-view";
     }
 
     @GetMapping("/create/user")
@@ -70,6 +78,8 @@ public class AdminController {
         model.addAttribute("form", new CreateLibraryBookForm());
         return "create-book";
     }
+
+
 
     @PostMapping("/create/book/process")
     public String processCreateBookForm(@Valid @ModelAttribute("form") CreateLibraryBookForm form, BindingResult bindingResult){
