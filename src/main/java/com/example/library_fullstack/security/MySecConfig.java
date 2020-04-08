@@ -20,7 +20,7 @@ public class MySecConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users").hasAuthority("ADMIN")
                 .antMatchers("/books").hasAuthority("USER")
                 .antMatchers("/**").permitAll()
-                .and()
+                .and().csrf().disable()
                 .formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
@@ -36,4 +36,5 @@ public class MySecConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedPage("/accessDenied");
     }
+
 }

@@ -8,8 +8,6 @@ import com.example.library_fullstack.entity.AppUser;
 import com.example.library_fullstack.entity.LibraryBook;
 import com.example.library_fullstack.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,11 +17,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.List;
 
-@Controller(value = "adminController")
+@Controller()
 public class AdminController {
 
     private AppUserRepository appUserRepository;
@@ -70,7 +67,7 @@ public class AdminController {
         AppUser newAppUser = appUserService.registerAppUser(form.getFirstName(),form.getLastName(),form.getEmail(),form.getPassword(), LocalDate.now(),form.isAdmin());
         
 
-        return "redirect:/index";
+        return "index";
     }
 
     @GetMapping("/create/book")
