@@ -16,7 +16,7 @@ public class MySecConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/creat/book").hasAuthority("ADMIN")
+                .antMatchers("/create/book").hasAuthority("ADMIN")
                 .antMatchers("/users").hasAuthority("ADMIN")
                 .antMatchers("/books").hasAuthority("USER")
                 .antMatchers("/**").permitAll()

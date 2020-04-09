@@ -34,6 +34,7 @@ public class AdminController {
         this.appUserService = appUserService;
     }
 
+    //TESTED
     @GetMapping("/users")
     public String getUserView(Model model){
         List<AppUser> userList = appUserRepository.findAll();
@@ -41,12 +42,16 @@ public class AdminController {
         return "users-view";
     }
 
+
+    //TESTED
     @GetMapping("/create/user")
     public String getCreateUserForm(Model model){
         model.addAttribute("form",new CreateAppUserForm());
         return "create-user";
     }
 
+
+    //TESTED
     @PostMapping("/create/user/process")
     public String postCreateUserForm(@Valid @ModelAttribute("form") CreateAppUserForm form, BindingResult bindingResult){
 
@@ -92,7 +97,7 @@ public class AdminController {
 
         LibraryBook libraryBook = new LibraryBook(form.getTitle(),Integer.valueOf(form.getMaxLoanDays()));
         libraryBookRepository.save(libraryBook);
-        return "redirect:/books";
+        return "books-view";
     }
 
 }
