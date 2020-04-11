@@ -53,6 +53,8 @@ public class Seeder implements CommandLineRunner {
                         new LibraryBook("Mistborn",150)
         ));
         appUserService.registerAppUser("Benjamin","Boson","BenjaminEBoson@Gmail.com","1a1b1c1d", LocalDate.now(),true);
+        appUserService.registerAppUser("Benjamin","Boson","Tester@Gmail.com","1a1b1c1d", LocalDate.now(),true);
+
     }
 
 

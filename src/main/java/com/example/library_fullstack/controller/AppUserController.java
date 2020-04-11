@@ -45,8 +45,8 @@ public class AppUserController {
 
     @RequestMapping(value = "loans/{email}")
     public String getLoanView(Model model, @PathVariable("email") String email, @AuthenticationPrincipal UserDetails caller){
-        if (caller == null){
-            return "redirect:/accessDenied";
+        if (caller == null || !appUserRepository.findByEmailIgnoreCase(email).isPresent()){
+            return "access-denied";
         }
         if (email.equals(caller.getUsername()) || caller.getAuthorities().stream().anyMatch(
                 auth -> auth.getAuthority().equals("ADMIN"))){
